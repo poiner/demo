@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zzb.repository.AuthorityRepository">
+    <resultMap id="authorityMap" type="com.zzb.model.AuthorityDTO">
+        <id column="id" javaType="String" property="id"/>
+        <result column="code" jdbcType="VARCHAR" property="code"/>
+        <result column="type" jdbcType="VARCHAR" property="type"/>
+        <result column="created_user" jdbcType="VARCHAR" property="createdUser"/>
+        <result column="last_modified_user" jdbcType="VARCHAR" property="lastModifiedUser"/>
+        <result column="name" jdbcType="VARCHAR" property="name"/>
+        <result column="created_time" javaType="java.util.Date" property="createdTime"/>
+    </resultMap>
+    
+    <select id="findAuthorities" resultMap="authorityMap">
+        SELECT t12.name AS created_user, t13.name AS last_modified_user, t11.*
+        FROM mt_sys_authority t11
+        LEFT JOIN mt_sys_user t12 ON t12.id = t11.created_by
+        LEFT JOIN mt_sys_user t13 ON t13.id = t11.last_modified_by
+    </select>
+</mapper>
